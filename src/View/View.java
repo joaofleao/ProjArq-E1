@@ -2,10 +2,12 @@ package View;
 
 import java.util.*;
 
-
-
 import Controller.ItemListController;
-public class View implements Observer{
+import Controller.BillOfExchangeStrategy;
+import Controller.PayPalStrategy;
+import Controller.CreditCardStrategy;
+import Controller.DebitCardStrategy;
+public class View extends Observable{
     
     Scanner keyboard;
     int option;
@@ -14,9 +16,11 @@ public class View implements Observer{
     public View() {
         keyboard = new Scanner(System.in);
         singleton();
-        stock = new ItemListController(true, this);
+        stock = new ItemListController(true, "Stock");
+        this.addObserver(stock.getItemListObject());
         mainScreen();
         shoppingScreen();
+        
         
     }
 
@@ -44,11 +48,14 @@ public class View implements Observer{
             System.out.println("\n\nDigite o número do item para adiciona-lo ao carrinho ou 0 para visitar o seu carrinho");
             option = keyboard.nextInt();
             
+            
             if (option == 0) {
                 keepRunning = myCartScreen();
                 
             }
             else {
+                setChanged();
+                notifyObservers();
                 cart.add(stock.remove(option-1));
             }
         }
@@ -81,33 +88,57 @@ public class View implements Observer{
 
     private boolean paymentScreen() {
         System.out.println("Bem vindo a area de pagamento!");
-        
-        while(true) {
-            System.out.println("Digite o número do método de pagamento para seleciona-lo, ou 0 para voltar as compras");
-            option = keyboard.nextInt();
+        System.out.println("\nMétodos de pagamento\n1: PayPal\n2: Cartão de Crédito\n3: Cartão de Débito\n4: Boleto");
+        System.out.println("\nDigite o número do método de pagamento para seleciona-lo, ou 0 para voltar as compras");
+        option = keyboard.nextInt();
+        String dado1, dado2, dado3, dado4;
 
-            if (option == 0) {
+        switch (option) {
+            case 0:
                 return true;
-            }
-            else {
-                //funcao de remover item ao carrinho
-                return false;
-            }
+            case 1:
+                System.out.println("E-mail");
+                dado1 = keyboard.nextLine();
+                System.out.println("Senha");
+                dado2 = keyboard.nextLine();
+                cart.pay(new PayPalStrategy(dado1, dado2));
+                break;
+            case 2:
+                System.out.println("Nome Completo");
+                dado1 = keyboard.nextLine();
+                System.out.println("Numero do Cartão");
+                dado2 = keyboard.nextLine();
+                System.out.println("Código de Segurança");
+                dado3 = keyboard.nextLine();
+                System.out.println("Data de Vencimento");
+                dado4 = keyboard.nextLine();
+                cart.pay(new CreditCardStrategy(dado1, dado2, dado3, dado4));
+                break;
+            case 3:
+                System.out.println("Nome Completo");
+                dado1 = keyboard.nextLine();
+                System.out.println("Numero do Cartão");
+                dado2 = keyboard.nextLine();
+                System.out.println("Código de Segurança");
+                dado3 = keyboard.nextLine();
+                System.out.println("Data de Vencimento");
+                dado4 = keyboard.nextLine();
+                cart.pay(new DebitCardStrategy(dado1, dado2, dado3, dado4));
+                break;
+            case 4:
+                cart.pay(new BillOfExchangeStrategy());
+                break;
+        
         }
+        return false;
+        
     }
 
     private void singleton() {
         if(cart==null) {
-            cart = new ItemListController(false, this);
+            cart = new ItemListController(false, "Cart");
+            this.addObserver(cart.getItemListObject());
         }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        System.out.println("Adicionado pelo Observable");
-
-        
-    }
-
-  
 }

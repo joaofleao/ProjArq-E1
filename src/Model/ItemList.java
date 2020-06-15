@@ -1,19 +1,20 @@
 package Model;
 import java.util.*;
-import java.util.Observable;
+import java.util.Observer;
 
-public class ItemList extends Observable {	
+public class ItemList implements Observer {	
 	
     private ArrayList<Item> list;
+    private String name;
 
-	public ItemList(){
+	public ItemList(String name){
         list = new ArrayList<Item>();
+        this.name = name;
     }
 
 	public void addItem(Item i) {
         list.add(i);
-        setChanged();
-        notifyObservers();
+      
     } 
 
     public int getSize() {
@@ -50,6 +51,14 @@ public class ItemList extends Observable {
             index++;
         }
         return text;
+    }
+
+    public String getName() {
+        return name;
+    }
+    @Override
+    public void update(Observable o, Object arg) {
+        System.out.println("Update em " + name);        
     }
  
 }

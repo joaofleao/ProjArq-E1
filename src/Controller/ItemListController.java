@@ -5,18 +5,18 @@ import java.util.*;
 import Model.Item;
 import Model.ItemList;
 
-import java.util.Observable;
-import java.util.Observer;
-
 
 public class ItemListController{	
 	
     private ItemList list;	
 
-	public ItemListController(boolean populated, Observer name){
-        list = new ItemList();
-        list.addObserver(name);
+	public ItemListController(boolean populated, String name){
+        list = new ItemList(name);
         if (populated) populate();
+    }
+
+    public ItemList getItemListObject() {
+        return list;
     }
 
     private void populate() {
@@ -43,6 +43,11 @@ public class ItemListController{
 
     public double price() {
         return list.getPrice();
+    }
+
+    public void pay(PaymentStrategy s) {
+        s.pay(price());
+
     }
 
     @Override
