@@ -1,4 +1,5 @@
-package Controller;
+package controller;
+import model.PaymentStrategy;
 
 public class PayPalStrategy implements PaymentStrategy {
 

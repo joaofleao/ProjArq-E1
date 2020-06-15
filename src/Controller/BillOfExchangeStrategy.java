@@ -1,5 +1,5 @@
-package Controller;
-
+package controller;
+import model.PaymentStrategy;
 import java.util.Random;
 
 public class BillOfExchangeStrategy implements PaymentStrategy {
@@ -19,7 +19,7 @@ public class BillOfExchangeStrategy implements PaymentStrategy {
                     number = number + alg;
                     
                 }
-                number = number + ".";
+                if(j==0) number = number + ".";
             }
             number = number + " ";
         }

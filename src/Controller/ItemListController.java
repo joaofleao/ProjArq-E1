@@ -1,9 +1,10 @@
-package Controller;
+package controller;
+import model.PaymentStrategy;
 
 import java.util.*;
 
-import Model.Item;
-import Model.ItemList;
+import model.Item;
+import model.ItemList;
 
 
 public class ItemListController{	
