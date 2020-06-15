@@ -10,9 +10,14 @@ public class Item {
         this.price = price;
     }
 
-    public String toString() {
-
-        return "[" + name + ", " + brand + " por apenas R$" + price;
+    public double getPrice() {
+        return price;
     }
+
+    public String toString() {
+        return "[" + name + " " + brand + " por apenas R$" + price + "]";
+    }
+
+
     
 }
