@@ -19,8 +19,6 @@ public class View extends Observable{
         this.addObserver(stock.getItemListObject());
         mainScreen();
         shoppingScreen();
-        
-        
     }
 
     private void mainScreen() {
@@ -30,12 +28,8 @@ public class View extends Observable{
     private void shoppingScreen() {
         boolean keepRunning= true;
 
-
         System.out.println("Bem vindo a area de compras!");
-
-
-        
-        
+       
         while(keepRunning) {
 
             System.out.println("\n\nCarrinho com " + cart.size() + " itens");
@@ -80,6 +74,8 @@ public class View extends Observable{
                 return paymentScreen();   
             }
             else {
+                setChanged();
+                notifyObservers();
                 stock.add(cart.remove(option-1));
             }
         }
@@ -130,6 +126,6 @@ public class View extends Observable{
             cart = new ItemListController(false, "Cart");
             this.addObserver(cart.getItemListObject());
         }
-    }
+    } 
 
 }
