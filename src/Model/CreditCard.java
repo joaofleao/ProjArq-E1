@@ -5,7 +5,6 @@ public class CreditCard extends Card {
     }
     @Override
     public void validate() {
-        // TODO Auto-generated method stub
         System.out.println("Compra aprovada no Cartão de Crédito"); 
     }
 }

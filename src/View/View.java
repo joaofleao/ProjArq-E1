@@ -15,14 +15,14 @@ public class View extends Observable{
     public View() {
         keyboard = new Scanner(System.in);
         singleton();
-        stock = new ItemListController(true, "Stock");
+        stock = new ItemListController(true, "Estoque");
         this.addObserver(stock.getItemListObject());
         mainScreen();
         shoppingScreen();
     }
 
     private void mainScreen() {
-        System.out.println("Banquinha do Flores");
+        System.out.println("Banquinha do João");
     }
 
     private void shoppingScreen() {
@@ -35,7 +35,7 @@ public class View extends Observable{
             System.out.println("\n\nCarrinho com " + cart.size() + " itens");
             System.out.println(cart);
             
-            System.out.println("\nStock");
+            System.out.println("\nEstoque");
             System.out.println(stock);
 
             System.out.println("\n\nDigite o número do item para adiciona-lo ao carrinho ou 0 para visitar o seu carrinho");
@@ -61,8 +61,8 @@ public class View extends Observable{
         
         while(true) {
             System.out.println("\nCarrinho com " + cart.size() + " itens");
-            System.out.println("Total: R$" + cart.price() + "\n");
             System.out.println(cart);
+            System.out.println("Total: R$" + cart.price() + "\n");
 
             System.out.println("\n\nDigite o número do item para remove-lo do seu carrinho, 0 para voltar a área de compras, -1 para finalizar compra");
             option = keyboard.nextInt();
@@ -123,7 +123,7 @@ public class View extends Observable{
 
     private void singleton() {
         if(cart==null) {
-            cart = new ItemListController(false, "Cart");
+            cart = new ItemListController(false, "Carrinho");
             this.addObserver(cart.getItemListObject());
         }
     } 
